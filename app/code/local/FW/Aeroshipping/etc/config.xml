@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category    FW
+ * @package     FW_AvantLink
+ * @copyright   Copyright (c) 2012 F+W Media, Inc. (http://www.fwmedia.com)
+ * @author		eMedia Dev Team
+ */
+-->
+<config>
+    <modules>
+        <FW_Aeroshipping>
+            <version>0.1.0</version>
+        </FW_Aeroshipping>
+    </modules>
+    <global>
+        <models>
+            <aeroshipping>
+                <class>FW_Aeroshipping_Model</class>
+                <resourceModel>aeroshipping_mysql4</resourceModel>
+            </aeroshipping>
+            <aeroshipping_mysql4>
+                <class>FW_Aeroshipping_Model_Mysql4</class>
+                <entities>
+                    <history>
+                        <table>fw_shipment_history</table>
+                    </history>
+                </entities>
+            </aeroshipping_mysql4>
+        </models>
+        <resources>
+            <aeroshipping_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </aeroshipping_write>
+            <aeroshipping_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </aeroshipping_read>
+            <aeroshipping_setup>
+                <setup>
+                    <module>FW_Aeroshipping</module>
+                    <class>FW_Aeroshipping_Model_Resource_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </aeroshipping_setup>
+        </resources>
+        <helpers>
+            <fw_aeroshipping>
+                <class>FW_Aeroshipping_Helper</class>
+            </fw_aeroshipping>
+        </helpers>
+
+    </global>
+    <crontab>
+        <jobs>
+            <aeroshipping>
+                <schedule>
+                    <cron_expr>0 4 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>aeroshipping/observer::getAeroShippingStatusExport</model>
+                </run>
+            </aeroshipping>
+        </jobs>
+    </crontab>
+    <default>
+        <aeroshipping>
+            <settings>
+                <ftp_host>ftp.aerofulfillment.com</ftp_host>
+                <ftp_user>fwlinks</ftp_user>
+                <ftp_password>3954657</ftp_password>
+                <ftp_folder>/fwlinks/Magento</ftp_folder>
+            </settings>
+        </aeroshipping>
+    </default>
+</config>
